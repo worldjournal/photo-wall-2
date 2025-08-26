@@ -42,4 +42,203 @@
   .lightbox-img{ max-width:96vw;max-height:75vh;border-radius:10px;display:block;margin:0 auto; }
   .caption-large{ color:#fff;margin-top:12px;font-size:16px;line-height:1.6;text-align:center }
   .lb-close{
-    position:absolute;top:-8px;right:-8px;width:40px;height:4
+    position:absolute;top:-8px;right:-8px;width:40px;height:40px;border-radius:50%;
+    background:rgba(0,0,0,.55);color:#fff;border:none;font-size:26px;cursor:pointer
+  }
+
+  /* 嵌入模式：?embed=1 時隱藏標題、拿掉邊距與背景 */
+  body.embed { padding:0; background:transparent; }
+  body.embed h1{ display:none; }
+</style>
+</head>
+<body>
+
+<h1>照片牆</h1>
+
+<div class="gallery" id="gallery">
+  <!-- 1991 -->
+  <div class="gallery-item" data-large="img/1991.jpg" data-caption-large="世界日報洛杉磯社新廈全貌。(1991年11月號系刊)">
+    <img loading="lazy" src="img/1991.jpg" alt="1991">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2000 -->
+  <div class="gallery-item" data-large="img/2000.jpg" data-caption-large="紐約、舊金山及洛杉磯三地的世界日報社與紐約市大皇后學院2000年17日宣布設立「王惕吾新聞獎」，來自台北的聯合報發行人王效蘭(左二)、北美世界日報總社副董事長馬克任(中)、世界日報總管理處總經理兼紐約社長李厚維(左一)將美金14萬5000元的「支票」交予皇后學院校長賀慈勒(右一)及新聞學中心主任李鳳真。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/2000.jpg" alt="2000">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2001_06 -->
+  <div class="gallery-item" data-large="img/2001_06.jpg" data-caption-large="路透2001年報導「世界日報」是全美國最大的華文報紙，並配上一張圖片，圖中顯示一位華人正在紐約市華埠的一個報攤購買「世界日報」。(路透)">
+    <img loading="lazy" src="img/2001_06.jpg" alt="2001_06">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2001 -->
+  <div class="gallery-item" data-large="img/2001.jpg" data-caption-large="緬街七號地鐵站旁的報攤，世界日報剛擺上架，華人讀者立即搶購。(記者羅旦兮/攝影)">
+    <img loading="lazy" src="img/2001.jpg" alt="2001">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2002_0606 -->
+  <div class="gallery-item" data-large="img/2002_0606.jpg" data-caption-large="世界日報在九一一事件後，接受全美華人捐款的「911基金專戶」，5日撥出30萬元，由社長李厚維(左二)及社長助理李德怡(左)代表，捐給「美國公民獎學金基金會」，該基金會理事長奈爾遜(右二)及紐約分部主任柴頓(右)代表接受。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/2002_0606.jpg" alt="2002_0606">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2002_0621 -->
+  <div class="gallery-item" data-large="img/2002_0621.jpg" data-caption-large="世界日報北美總管理處總經理兼紐約社社長李厚維(中)20日在紅十字會大紐約區皇后區分會年會中，獲得董事會主席杜克(右)及市議員劉醇逸頒贈「社區領導獎」。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/2002_0621.jpg" alt="2002_0621">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2002_10 -->
+  <div class="gallery-item" data-large="img/2002_10.jpg" data-caption-large="製作小組資深記者奧特利訪問紐約世界日報社長李厚維(中)，以了解華文媒體對九一一的相關報導。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/2002_10.jpg" alt="2002_10">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2003 -->
+  <div class="gallery-item" data-large="img/2003.jpg" data-caption-large="世界日報社長李厚維(左)2003年向到訪的聯邦商務部少數族裔商業發展署署長藍斯登介紹新啟用的出版一貫作業(CTP)系統。(本報記者/攝影)">
+    <img loading="lazy" src="img/2003.jpg" alt="2003">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2003_08 -->
+  <div class="gallery-item" data-large="img/2003_08.jpg" data-caption-large="紐約大停電2003年8月15日進入第二天，各地區陸續恢復供電，世界日報為服務讀者，克服種種困難，分兩批趕印數萬份號外贈送讀者，立即被索取一空。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/2003_08.jpg" alt="2003_08">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2004_1 -->
+  <div class="gallery-item" data-large="img/2004_1.jpg" data-caption-large="為服務在美華人，讓關心台灣2004年大選的僑胞們儘早得知選舉結果，世界日報紐約總社3月20日得知台灣大選的開票結果後，於早晨7時半加印完成第三次版，並加印號外，報導大選詳細結果，在華人社區派發。(記者胡盈光、朱文漢/攝影)">
+    <img loading="lazy" src="img/2004_1.jpg" alt="2004_1">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2004 -->
+  <div class="gallery-item" data-large="img/2004.jpg" data-caption-large="世界日報於早晨7時半加印完成第三次版。(記者胡盈光、朱文漢/攝影)">
+    <img loading="lazy" src="img/2004.jpg" alt="2004">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2004_2 -->
+  <div class="gallery-item" data-large="img/2004_2.jpg" data-caption-large="世界日報與洛杉磯時報合作售報的「兩報聯售」售報箱。(記者余寧/攝影)">
+    <img loading="lazy" src="img/2004_2.jpg" alt="2004_2">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 2009 -->
+  <div class="gallery-item" data-large="img/2009.jpg" data-caption-large="歐巴馬贏得選舉，成為美國第一位非裔總統。法拉盛冷女士11月5日閱讀紐約世界日報詳盡的報導。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/2009.jpg" alt="2009">
+    <div class="caption-small"></div>
+  </div>
+
+  <!-- 20091 -->
+  <div class="gallery-item" data-large="img/20091.jpg" data-caption-large="台灣三合一選舉結果出爐，由於當地選情備受本地僑胞關注，世界日報於12月5日率先報導並即時更新當地的選舉盛況，讓身居海外的僑胞第一時間了解到選情的發展和變化，其獨家詳盡的報導深受讀者們歡迎。(記者胡光/攝影)">
+    <img loading="lazy" src="img/20091.jpg" alt="20091">
+    <div class="caption-small"></div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+  <div class="lightbox-inner">
+    <button class="lb-close" id="lbClose" aria-label="關閉">&times;</button>
+    <img class="lightbox-img" id="lbImg" src="" alt="">
+    <div class="caption-large" id="lbCaption"></div>
+  </div>
+</div>
+
+<script>
+  // 嵌入模式：?embed=1 會套用 body.embed
+  (function(){
+    const params = new URLSearchParams(location.search);
+    if (params.get('embed') === '1') {
+      document.body.classList.add('embed');
+    }
+  })();
+
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCaption');
+  const lbClose = document.getElementById('lbClose');
+
+  document.getElementById('gallery').addEventListener('click', e => {
+    const item = e.target.closest('.gallery-item');
+    if (!item) return;
+    lbImg.src = item.dataset.large || item.querySelector('img').src;
+    lbCap.textContent = item.dataset.captionLarge || '';
+    lb.classList.add('open');
+  });
+
+  function closeLB(){
+    lb.classList.remove('open');
+    lbImg.src = '';
+    lbCap.textContent = '';
+  }
+  lbClose.addEventListener('click', closeLB);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+</script>
+
+<script>
+/* 縮圖字幕自動同步成全文 */
+document.querySelectorAll('.gallery-item').forEach(item => {
+  const full = item.getAttribute('data-caption-large') || '';
+  const small = item.querySelector('.caption-small');
+  if (small && full) small.textContent = full;
+});
+</script>
+
+<script>
+/* 圖片錯誤時自動嘗試大小寫、副檔名與去前導零 */
+(function () {
+  function tryAlternates(img) {
+    const tried = img.dataset.tried || "";
+    let url;
+    try { url = new URL(img.src); } catch (e) { return; }
+    const parts = url.pathname.split("/");
+    const filename = parts.pop();
+    const dot = filename.lastIndexOf(".");
+    const name = dot >= 0 ? filename.slice(0, dot) : filename;
+    const ext  = dot >= 0 ? filename.slice(dot + 1) : "";
+    const nameNoZero = /^\d+$/.test(name) ? String(parseInt(name, 10)) : name;
+
+    const candidates = [];
+    if (ext) {
+      candidates.push(`${name}.${ext.toUpperCase()}`);
+      if (ext.toLowerCase() !== "jpeg") candidates.push(`${name}.jpeg`);
+      if (nameNoZero !== name) {
+        candidates.push(`${nameNoZero}.${ext}`);
+        candidates.push(`${nameNoZero}.${ext.toUpperCase()}`);
+        candidates.push(`${nameNoZero}.jpeg`);
+      }
+    } else {
+      candidates.push(`${name}.jpg`, `${name}.JPG`, `${name}.jpeg`);
+      if (nameNoZero !== name) {
+        candidates.push(`${nameNoZero}.jpg`, `${nameNoZero}.JPG`, `${nameNoZero}.jpeg`);
+      }
+    }
+
+    for (const cand of candidates) {
+      if (!tried.split(",").includes(cand)) {
+        img.dataset.tried = tried ? tried + "," + cand : cand;
+        const newPath = parts.concat(cand).join("/");
+        url.pathname = newPath;
+        img.src = url.href;
+        return;
+      }
+    }
+    img.style.opacity = "0.35";
+    img.style.filter = "grayscale(1)";
+    img.title = "找不到檔案：" + filename;
+  }
+  document.querySelectorAll(".gallery-item img").forEach(function (img) {
+    img.addEventListener("error", function () { tryAlternates(img); });
+  });
+})();
+</script>
+
+</body>
+</html>
