@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>照片牆</title>
+<style>
+  :root{
+    --gap:10px;
+    --thumb-h:220px; /* 縮圖高度，可調整 */
+    --bg:#fafafa;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;font-family:system-ui,"Noto Sans TC",Arial,Helvetica,sans-serif;background:var(--bg)}
+  h1{margin:0 0 16px 0;font-weight:700}
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:var(--gap);
+  }
+  .gallery-item{
+    position:relative;overflow:hidden;border-radius:12px;cursor:pointer;background:#eee;
+  }
+  .gallery-item img{
+    width:100%;height:var(--thumb-h);object-fit:cover;display:block;
+    transition:transform .35s ease;
+  }
+  .gallery-item:hover img{ transform:scale(1.06) }
+  .caption-small{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:8px 10px;background:rgba(0,0,0,.6);color:#fff;
+    font-size:14px;line-height:1.4;opacity:0;transition:opacity .25s;
+  }
+  .gallery-item:hover .caption-small{ opacity:1 }
+
+  .lightbox{
+    position:fixed;inset:0;display:none;justify-content:center;align-items:center;
+    background:rgba(0,0,0,.86);z-index:1000;padding:24px;
+  }
+  .lightbox.open{ display:flex }
+  .lightbox-inner{ max-width:96vw;max-height:90vh;position:relative }
+  .lightbox-img{ max-width:96vw;max-height:75vh;border-radius:10px;display:block;margin:0 auto; }
+  .caption-large{ color:#fff;margin-top:12px;font-size:16px;line-height:1.6;text-align:center }
+  .lb-close{
+    position:absolute;top:-8px;right:-8px;width:40px;height:40px;border-radius:50%;
+    background:rgba(0,0,0,.55);color:#fff;border:none;font-size:26px;cursor:pointer
+  }
+</style>
+</head>
+<body>
+
+<h1>照片牆</h1>
+
+<div class="gallery" id="gallery">
+  <!-- 01 -->
+  <div class="gallery-item" data-large="img/01.jpg" data-caption-large="1996年5月15日駱家輝夫婦拜訪紐約世界日報，兩人開心地翻閱世界日報對他的報導。(本報檔案照)">
+    <img loading="lazy" src="img/01.jpg" alt="駱家輝">
+    <div class="caption-small">1996年5月15日駱家輝夫婦拜訪紐約世界日報，兩人開心地翻閱世界日報對他的報導。(本報檔案照)</div>
+  </div>
+  <!-- 02 -->
+  <div class="gallery-item" data-large="img/02.jpg" data-caption-large="蔣夫人宋美齡2000年元旦在紐約世界日報文化藝廊，為她的畫展開幕剪綵。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/02.jpg" alt="宋美齡">
+    <div class="caption-small">蔣夫人宋美齡2000年元旦在紐約世界日報文化藝廊，為她的畫展開幕剪綵。(記者許振輝/攝影)</div>
+  </div>
+  <!-- 03 -->
+  <div class="gallery-item" data-large="img/03.jpg" data-caption-large="「小巨人」姚明果然名不虛傳，他的頭幾乎撞到天花板，圖為2004年他接受世界日報記者的採訪，面露笑容。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/03.jpg" alt="姚明">
+    <div class="caption-small">「小巨人」姚明果然名不虛傳，他的頭幾乎撞到天花板，圖為2004年他接受世界日報記者的採訪，面露笑容。(記者許振輝/攝影)</div>
+  </div>
+  <!-- 04 -->
+  <div class="gallery-item" data-large="img/04.jpg" data-caption-large="台灣TVBS總經理李濤(左)與李艷秋夫婦2005年現身洛城，在僑界頗負盛名的他們特地藉由世界日報向讀者問好。(記者陳盈霖/攝影)">
+    <img loading="lazy" src="img/04.jpg" alt="李濤">
+    <div class="caption-small">台灣TVBS總經理李濤(左)與李艷秋夫婦2005年現身洛城，在僑界頗負盛名的他們特地藉由世界日報向讀者問好。(記者陳盈霖/攝影)</div>
+  </div>
+  <!-- 05 -->
+  <div class="gallery-item" data-large="img/05.jpg" data-caption-large="神探李昌鈺(右一)2005年為世界日報高球公開賽開球揭幕，左起為Alex Liu、諸立山、黎大海、李厚維、江文輝、Michael Lin、楊永明。(記者酈家驤/攝影)">
+    <img loading="lazy" src="img/05.jpg" alt="李昌鈺">
+    <div class="caption-small">神探李昌鈺(右一)2005年為世界日報高球公開賽開球揭幕，左起為Alex Liu、諸立山、黎大海、李厚維、江文輝、Michael Lin、楊永明。(記者酈家驤/攝影)</div>
+  </div>
+  <!-- 06 -->
+  <div class="gallery-item" data-large="img/06.jpg" data-caption-large="趙小蘭2005年11月在紐約華埠推廣聯邦新的處方藥制度，世界日報與世界周刊以封面專題報導。圖中右起為趙小蘭妹妹趙安吉、父親趙錫成、趙小蘭、世界日報紐約社助理社長李德怡。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/06.jpg" alt="趙小蘭">
+    <div class="caption-small">趙小蘭2005年11月在紐約華埠推廣聯邦新的處方藥制度，世界日報與世界周刊以封面專題報導。圖中右起為趙小蘭妹妹趙安吉、父親趙錫成、趙小蘭、世界日報紐約社助理社長李德怡。(記者許振輝/攝影)</div>
+  </div>
+  <!-- 07 -->
+  <div class="gallery-item" data-large="img/07.jpg" data-caption-large="劉玉玲2006年在紐約市接受世界日報30周年社慶的「名人專訪」。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/07.jpg" alt="劉玉玲">
+    <div class="caption-small">劉玉玲2006年在紐約市接受世界日報30周年社慶的「名人專訪」。(記者許振輝/攝影)</div>
+  </div>
+  <!-- 08 -->
+  <div class="gallery-item" data-large="img/08.jpg" data-caption-large="世界日報30周年巨星慈善演唱會記者會。左起：藝人李威、上官亮、胡錦、胡兵、世界日報社長宋晶宜、華美銀行代表唐孝先與藝人王芷蕾。">
+    <img loading="lazy" src="img/08.jpg" alt="李威">
+    <div class="caption-small">世界日報30周年巨星慈善演唱會記者會。左起：藝人李威、上官亮、胡錦、胡兵、世界日報社長宋晶宜、華美銀行代表唐孝先與藝人王芷蕾。</div>
+  </div>
+  <!-- 09 -->
+  <div class="gallery-item" data-large="img/09.jpg" data-caption-large="陳士駿(右)與媽媽嚴以慈拿著世界日報報紙與「風雲人物」海報合影。(記者高蘭馨/攝影)">
+    <img loading="lazy" src="img/09.jpg" alt="陳士駿">
+    <div class="caption-small">陳士駿(右)與媽媽嚴以慈拿著世界日報報紙與「風雲人物」海報合影。(記者高蘭馨/攝影)</div>
+  </div>
+  <!-- 10 -->
+  <div class="gallery-item" data-large="img/10.jpg" data-caption-large="舊金山市長紐森(右)2007年參訪舊金山世界日報，社長宋晶宜(左)歡迎接待。(記者高蘭馨/攝影)">
+    <img loading="lazy" src="img/10.jpg" alt="紐森">
+    <div class="caption-small">舊金山市長紐森(右)2007年參訪舊金山世界日報，社長宋晶宜(左)歡迎接待。(記者高蘭馨/攝影)</div>
+  </div>
+  <!-- 11 -->
+  <div class="gallery-item" data-large="img/11.jpg" data-caption-large="職棒選手王建民、舊金山經文處長廖偉平和世界日報公關經理何怡平，在舊金山巨人棒球隊主場。(記者楊海光/攝影)">
+    <img loading="lazy" src="img/11.jpg" alt="王建民">
+    <div class="caption-small">職棒選手王建民、舊金山經文處長廖偉平和世界日報公關經理何怡平，在舊金山巨人棒球隊主場。(記者楊海光/攝影)</div>
+  </div>
+  <!-- 12 -->
+  <div class="gallery-item" data-large="img/12.jpg" data-caption-large="錢永健2008年在辦公室接受世界日報專訪。(記者李大明/攝影)">
+    <img loading="lazy" src="img/12.jpg" alt="錢永健">
+    <div class="caption-small">錢永健2008年在辦公室接受世界日報專訪。(記者李大明/攝影)</div>
+  </div>
+  <!-- 13 -->
+  <div class="gallery-item" data-large="img/13.jpg" data-caption-large="JJ林俊傑、Vivian徐若瑄、阿杜(由右至左)2008年在拉斯維加斯舞台後合照，祝世界日報讀者新年快樂。 (記者伊佳奇/攝影)">
+    <img loading="lazy" src="img/13.jpg" alt="徐若瑄">
+    <div class="caption-small">JJ林俊傑、Vivian徐若瑄、阿杜(由右至左)2008年在拉斯維加斯舞台後合照，祝世界日報讀者新年快樂。 (記者伊佳奇/攝影)</div>
+  </div>
+  <!-- 14 -->
+  <div class="gallery-item" data-large="img/14.jpg" data-caption-large="林正盛導演與女友韓淑華二人2009年在接受採訪後於世界日報夏威夷辦事處門口所攝。(記者高振華/攝影)">
+    <img loading="lazy" src="img/14.jpg" alt="林正盛">
+    <div class="caption-small">林正盛導演與女友韓淑華二人2009年在接受採訪後於世界日報夏威夷辦事處門口所攝。(記者高振華/攝影)</div>
+  </div>
+  <!-- 15 -->
+  <div class="gallery-item" data-large="img/15.jpg" data-caption-large="張德培在「世界日報」上簽名，並祝本報讀者中秋節快樂。(記者劉庠/攝影)">
+    <img loading="lazy" src="img/15.jpg" alt="張德培">
+    <div class="caption-small">張德培在「世界日報」上簽名，並祝本報讀者中秋節快樂。(記者劉庠/攝影)</div>
+  </div>
+  <!-- 16 -->
+  <div class="gallery-item" data-large="img/16.jpg" data-caption-large="王治郅拿著世界日報，向本報讀者問好。(記者徐敏子/攝影)">
+    <img loading="lazy" src="img/16.jpg" alt="王治郅">
+    <div class="caption-small">王治郅拿著世界日報，向本報讀者問好。(記者徐敏子/攝影)</div>
+  </div>
+  <!-- 17 -->
+  <div class="gallery-item" data-large="img/17.jpg" data-caption-large="施明德2010年拜訪紐約世界日報，暢談一生中參與台灣民主運動的歷程。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/17.jpg" alt="施明德">
+    <div class="caption-small">施明德2010年拜訪紐約世界日報，暢談一生中參與台灣民主運動的歷程。(記者許振輝/攝影)</div>
+  </div>
+  <!-- 18 -->
+  <div class="gallery-item" data-large="img/18.jpg" data-caption-large="郎朗接受「世界日報」專訪，暢談心路歷程。(記者曾慧燕/攝影)">
+    <img loading="lazy" src="img/18.jpg" alt="郎朗">
+    <div class="caption-small">郎朗接受「世界日報」專訪，暢談心路歷程。(記者曾慧燕/攝影)</div>
+  </div>
+  <!-- 19 -->
+  <div class="gallery-item" data-large="img/19.jpg" data-caption-large="紐約世界日報總編輯翁台生(中)、要聞組主任魏碧洲(左)在印第安納大學專訪諾貝爾經濟學獎得主歐斯壯教授。(記者陳麗卿/攝影)">
+    <img loading="lazy" src="img/19.jpg" alt="歐斯壯">
+    <div class="caption-small">紐約世界日報總編輯翁台生(中)、要聞組主任魏碧洲(左)在印第安納大學專訪諾貝爾經濟學獎得主歐斯壯教授。(記者陳麗卿/攝影)</div>
+  </div>
+  <!-- 20 -->
+  <div class="gallery-item" data-large="img/20.jpg" data-caption-large="2010年溫家寶與紐約世界日報總編輯翁台生(左一)握手。(記者曹健/攝影)">
+    <img loading="lazy" src="img/20.jpg" alt="溫家寶">
+    <div class="caption-small">2010年溫家寶與紐約世界日報總編輯翁台生(左一)握手。(記者曹健/攝影)</div>
+  </div>
+  <!-- 21 -->
+  <div class="gallery-item" data-large="img/21.jpg" data-caption-large="台總統馬英九接受世界日報社長張漢昇(中)、總編輯翁台生(左)等人專訪，談兩岸、談外交談民國百年願景。(記者林錫銘/攝影)">
+    <img loading="lazy" src="img/21.jpg" alt="馬英九">
+    <div class="caption-small">台總統馬英九接受世界日報社長張漢昇(中)、總編輯翁台生(左)等人專訪，談兩岸、談外交談民國百年願景。(記者林錫銘/攝影)</div>
+  </div>
+  <!-- 22 -->
+  <div class="gallery-item" data-large="img/22.jpg" data-caption-large="周杰倫2011年接受洛杉磯「世界日報」專訪，簽名祝讀者新年快樂。(記者馬雲/攝影)">
+    <img loading="lazy" src="img/22.jpg" alt="周杰倫">
+    <div class="caption-small">周杰倫2011年接受洛杉磯「世界日報」專訪，簽名祝讀者新年快樂。(記者馬雲/攝影)</div>
+  </div>
+  <!-- 23 -->
+  <div class="gallery-item" data-large="img/23.jpg" data-caption-large="夏志清夫婦2011年與世界日報副董事長馬克任(左二)相見歡。左一為世報紐約社社長張漢昇。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/23.jpg" alt="夏志清">
+    <div class="caption-small">夏志清夫婦2011年與世界日報副董事長馬克任(左二)相見歡。左一為世報紐約社社長張漢昇。(記者許振輝/攝影)</div>
+  </div>
+  <!-- 24 -->
+  <div class="gallery-item" data-large="img/24.jpg" data-caption-large="龍應台2011年出席世界日報35週年慶「華人世界的大江大海」活動記者會。(記者許振輝/攝影)">
+    <img loading="lazy" src="img/24.jpg" alt="龍應台">
+    <div class="caption-small">龍應台2011年出席世界日報35週年慶「華人世界的大江大海」活動記者會。(記者許振輝/攝影)</div>
+  </div>
+  <!-- 25 -->
+  <div class="gallery-item" data-large="img/25.jpg" data-caption-large="虎媽蔡美兒接受世界日報專訪，暢談創作體會和人生心得。(記者孟芳/攝影)">
+    <img loading="lazy" src="img/25.jpg" alt="虎媽">
+    <div class="caption-small">虎媽蔡美兒接受世界日報專訪，暢談創作體會和人生心得。(記者孟芳/攝影)</div>
+  </div>
+  <!-- 26 -->
+  <div class="gallery-item" data-large="img/26.jpg" data-caption-large="剛下飛機的黃國倫用親筆簽名向世界日報灣區的讀者問好。(記者劉庠/攝影)">
+    <img loading="lazy" src="img/26.jpg" alt="黃國倫">
+    <div class="caption-small">剛下飛機的黃國倫用親筆簽名向世界日報灣區的讀者問好。(記者劉庠/攝影)</div>
+  </div>
+  <!-- 27 -->
+  <div class="gallery-item" data-large="img/27.jpg" data-caption-large="金溥聰全神貫注閱讀世界日報新聞。(記者杜宜臻/攝影)">
+    <img loading="lazy" src="img/27.jpg" alt="金溥聰">
+    <div class="caption-small">金溥聰全神貫注閱讀世界日報新聞。(記者杜宜臻/攝影)</div>
+  </div>
+  <!-- 28 -->
+  <div class="gallery-item" data-large="img/28.jpg" data-caption-large="林書豪2011年到屋崙Patten大學，突擊拜訪遠從台灣來的世界日報體育夏令營學生，並親筆寫下感謝大家閱讀世界日報。(記者劉庠/攝影)">
+    <img loading="lazy" src="img/28.jpg" alt="林書豪">
+    <div class="caption-small">林書豪2011年到屋崙Patten大學，突擊拜訪遠從台灣來的世界日報體育夏令營學生，並親筆寫下感謝大家閱讀世界日報。(記者劉庠/攝影)</div>
+  </div>
+  <!-- 29 -->
+  <div class="gallery-item" data-large="img/29.jpg" data-caption-large="魏德聖在世界日報特製招牌上，簽下「世界日報‧全美第一 」及個人簽名。(記者王慶偉/攝影)">
+    <img loading="lazy" src="img/29.jpg" alt="魏德聖">
+    <div class="caption-small">魏德聖在世界日報特製招牌上，簽下「世界日報‧全美第一 」及個人簽名。(記者王慶偉/攝影)</div>
+  </div>
+  <!-- 30 -->
+  <div class="gallery-item" data-large="img/30.jpg" data-caption-large="陳偉殷接受溫哥華世界日報專訪，並簽名向讀者問候。（記者周化堯/攝影）">
+    <img loading="lazy" src="img/30.jpg" alt="陳偉殷">
+    <div class="caption-small">陳偉殷接受溫哥華世界日報專訪，並簽名向讀者問候。（記者周化堯/攝影）</div>
+  </div>
+  <!-- 31 -->
+  <div class="gallery-item" data-large="img/31.jpg" data-caption-large="李安2012年抵洛杉磯宣傳「少年Pi的奇幻漂流」向「世界日報」讀者問好。(記者馬雲/攝影)">
+    <img loading="lazy" src="img/31.jpg" alt="李安">
+    <div class="caption-small">李安2012年抵洛杉磯宣傳「少年Pi的奇幻漂流」向「世界日報」讀者問好。(記者馬雲/攝影)</div>
+  </div>
+  <!-- 32 -->
+  <div class="gallery-item" data-large="img/32.jpg" data-caption-large="歷史學家余英時2013年在普林斯頓寓所接受世界日報訪問。(陳麗卿/攝影)">
+    <img loading="lazy" src="img/32.jpg" alt="余英時">
+    <div class="caption-small">歷史學家余英時2013年在普林斯頓寓所接受世界日報訪問。(陳麗卿/攝影)</div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+  <div class="lightbox-inner">
+    <button class="lb-close" id="lbClose" aria-label="關閉">&times;</button>
+    <img class="lightbox-img" id="lbImg" src="" alt="">
+    <div class="caption-large" id="lbCaption"></div>
+  </div>
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCaption');
+  const lbClose = document.getElementById('lbClose');
+
+  document.getElementById('gallery').addEventListener('click', e => {
+    const item = e.target.closest('.gallery-item');
+    if (!item) return;
+    lbImg.src = item.dataset.large || item.querySelector('img').src;
+    lbCap.textContent = item.dataset.captionLarge || '';
+    lb.classList.add('open');
+  });
+
+  function closeLB(){
+    lb.classList.remove('open');
+    lbImg.src = '';
+    lbCap.textContent = '';
+  }
+  lbClose.addEventListener('click', closeLB);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+</script>
+
+</body>
+<script>
+(function () {
+  function tryAlternates(img) {
+    // 已嘗試過的變體記錄，避免無限重試
+    const tried = img.dataset.tried || "";
+
+    // 解析路徑與檔名
+    let url;
+    try { url = new URL(img.src); } catch (e) { return; }
+    const parts = url.pathname.split("/");
+    const filename = parts.pop();          // 例如: "07.jpg"
+    const dot = filename.lastIndexOf(".");
+    const name = dot >= 0 ? filename.slice(0, dot) : filename; // "07"
+    const ext  = dot >= 0 ? filename.slice(dot + 1) : "";      // "jpg"
+
+    // 去前導零版（"07" -> "7"），僅在全數字時
+    const nameNoZero = /^\d+$/.test(name) ? String(parseInt(name, 10)) : name;
+
+    // 依序嘗試的候選（可再加）
+    const candidates = [];
+    if (ext) {
+      candidates.push(`${name}.${ext.toUpperCase()}`);
+      if (ext.toLowerCase() !== "jpeg") candidates.push(`${name}.jpeg`);
+      if (nameNoZero !== name) {
+        candidates.push(`${nameNoZero}.${ext}`);
+        candidates.push(`${nameNoZero}.${ext.toUpperCase()}`);
+        candidates.push(`${nameNoZero}.jpeg`);
+      }
+    } else {
+      candidates.push(`${name}.jpg`, `${name}.JPG`, `${name}.jpeg`);
+      if (nameNoZero !== name) {
+        candidates.push(`${nameNoZero}.jpg`, `${nameNoZero}.JPG`, `${nameNoZero}.jpeg`);
+      }
+    }
+
+    // 找出第一個尚未嘗試過的候選，替換 src 再試
+    for (const cand of candidates) {
+      if (!tried.split(",").includes(cand)) {
+        img.dataset.tried = tried ? tried + "," + cand : cand;
+        const newPath = parts.concat(cand).join("/");
+        url.pathname = newPath;
+        img.src = url.href;
+        return;
+      }
+    }
+
+    // 全部嘗試失敗：做個可視化標示，方便你定位
+    img.style.opacity = "0.35";
+    img.style.filter = "grayscale(1)";
+    img.title = "找不到檔案：" + filename;
+  }
+
+  // 監聽所有圖的 error 事件
+  document.querySelectorAll(".gallery-item img").forEach(function (img) {
+    img.addEventListener("error", function () { tryAlternates(img); });
+  });
+})();
+</script>
+
+</html>
