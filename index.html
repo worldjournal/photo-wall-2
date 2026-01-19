@@ -39,7 +39,12 @@
   }
   .lightbox.open{ display:flex }
   .lightbox-inner{ max-width:96vw;max-height:90vh;position:relative }
-  .lightbox-img{ max-width:96vw;max-height:75vh;border-radius:10px;display:block;margin:0 auto; }
+  .lightbox-img{
+    max-width:96vw;max-height:75vh;border-radius:10px;display:block;margin:0 auto;
+    /* 保證不會被其他樣式弄成黑白/灰： */
+    filter:none !important;
+    opacity:1 !important;
+  }
   .caption-large{ color:#fff;margin-top:12px;font-size:16px;line-height:1.6;text-align:center }
   .lb-close{
     position:absolute;top:-8px;right:-8px;width:40px;height:40px;border-radius:50%;
@@ -103,7 +108,7 @@
     <img loading="lazy" src="img/暴風雪.JPG" alt="暴風雪">
     <div class="caption-small"></div>
   </div>
-  
+
   <!-- 2002_0621 -->
   <div class="gallery-item" data-large="img/2002_0621.jpg" data-caption-large="世界日報北美總管理處總經理兼紐約社社長李厚維(中)20日在紅十字會大紐約區皇后區分會年會中，獲得董事會主席杜克(右)及市議員劉醇逸頒贈「社區領導獎」。(記者許振輝/攝影)">
     <img loading="lazy" src="img/2002_0621.jpg" alt="2002_0621">
@@ -149,12 +154,13 @@
          alt="2004_2">
     <div class="caption-small"></div>
   </div>
-<!-- 08 -->
+
+  <!-- 08 -->
   <div class="gallery-item" data-large="img/08.jpg" data-caption-large="世界日報30週年巨星慈善演唱會記者會。左起：藝人李威、上官亮、胡錦、胡兵、世界日報社長宋晶宜、華美銀行代表唐孝先與藝人王芷蕾。(本報資料照)">
     <img loading="lazy" src="img/08.jpg" alt="08">
     <div class="caption-small"></div>
   </div>
-  
+
   <!-- 四川賑災 -->
   <div class="gallery-item" data-large="img/四川賑災.JPG" data-caption-large="世界日報發起愛心捐款，為四川賑災。(記者許振輝/攝影)">
     <img loading="lazy" src="img/四川賑災.JPG" alt="四川賑災">
@@ -166,13 +172,13 @@
     <img loading="lazy" src="img/四川.JPG" alt="四川">
     <div class="caption-small"></div>
   </div>
-  
-<!-- 球迷 -->
+
+  <!-- 球迷 -->
   <div class="gallery-item" data-large="img/球迷.JPG" data-caption-large="巨人棒球隊球場內，球迷高舉世界日報上的王建民大幅照片。（記者劉開平/攝影）">
     <img loading="lazy" src="img/球迷.JPG" alt="球迷">
     <div class="caption-small"></div>
   </div>
-  
+
   <!-- 2009 -->
   <div class="gallery-item"
        data-large="https://worldjournal.github.io/photo-wall-2/img/2009.jpg?v=3"
@@ -296,13 +302,13 @@
     <img loading="lazy" src="img/最新結果.jpg" alt="最新結果">
     <div class="caption-small"></div>
   </div>
-  
-<!-- 140頁 -->
+
+  <!-- 140頁 -->
   <div class="gallery-item" data-large="img/140頁.JPG" data-caption-large="世界日報北美總管理處總經理兼紐約社社長楊仁烽與同仁切蛋糕，一同慶祝世報單日發行突破140頁。(記者朱澤人/攝影) ">
     <img loading="lazy" src="img/140頁.JPG" alt="140頁">
     <div class="caption-small"></div>
   </div>
-  
+
   <!-- 美國獎學金 -->
   <div class="gallery-item" data-large="img/美國獎學金.jpg" data-caption-large="世界日報北美總管理處總經理兼紐約社社長李厚維(右一)和助理社長李德怡(左二)，向「美國獎學金」主席史坦利(右二)和傳播副主席費雪(左一)轉交世界日報讀者為卡翠納災區部分捐款的支票。(徐佳/攝影)">
     <img loading="lazy" src="img/美國獎學金.jpg" alt="美國獎學金">
@@ -350,7 +356,7 @@
     <img loading="lazy" src="img/時報廣場.jpg" alt="時報廣場">
     <div class="caption-small"></div>
   </div>
-</div><!-- ✅ 關閉 #gallery -->
+</div>
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
@@ -368,12 +374,14 @@
     if (params.get('embed') === '1') document.body.classList.add('embed');
   })();
 
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
-  const lbCap = document.getElementById('lbCaption');
-  const lbClose = document.getElementById('lbClose');
+  // 縮圖字幕同步
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    const full = item.getAttribute('data-caption-large') || '';
+    const small = item.querySelector('.caption-small');
+    if (small && full) small.textContent = full;
+  });
 
-  // ✅ 同一套「挽救破圖」：縮圖 + 放大圖都能用
+  // 破圖挽救：只改檔名嘗試，不做任何「變灰/黑白」
   function tryAlternates(img){
     const tried = img.dataset.tried || "";
     let url;
@@ -411,18 +419,21 @@
         return;
       }
     }
-
-    img.style.opacity = "0.35";
-    img.style.filter = "grayscale(1)";
+    // 到這裡代表真的找不到：不改樣式、不變灰，只留提示
     img.title = "找不到檔案：" + filename;
   }
 
-  // ✅ 點縮圖開燈箱
+  // lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCaption');
+  const lbClose = document.getElementById('lbClose');
+
   document.getElementById('gallery').addEventListener('click', e => {
     const item = e.target.closest('.gallery-item');
     if (!item) return;
 
-    lbImg.dataset.tried = ""; // ✅ 每次開新圖，重置嘗試紀錄
+    lbImg.dataset.tried = "";
     lbImg.src = item.dataset.large || item.querySelector('img').src;
     lbCap.textContent = item.dataset.captionLarge || '';
     lb.classList.add('open');
@@ -439,20 +450,11 @@
   lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
   window.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
 
-  // ✅ 縮圖破圖時挽救
+  // 綁錯誤挽救：縮圖 + 放大圖
   document.querySelectorAll(".gallery-item img").forEach(img => {
     img.addEventListener("error", () => tryAlternates(img));
   });
-
-  // ✅ 放大圖破圖時挽救
   lbImg.addEventListener("error", () => tryAlternates(lbImg));
-
-  // ✅ 縮圖字幕同步
-  document.querySelectorAll('.gallery-item').forEach(item => {
-    const full = item.getAttribute('data-caption-large') || '';
-    const small = item.querySelector('.caption-small');
-    if (small && full) small.textContent = full;
-  });
 </script>
 
 </body>
